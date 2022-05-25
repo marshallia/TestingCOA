@@ -14,10 +14,8 @@ GitHub Management.
 * Before start training please fork this repository to your own GitHub account
 * Make sure that your system has python v2.9
 * Download initial data set. This dataset containing images of cats and dogs. 1000 for training, 600 for validation, and 200 for test
-
+download the dataset from [here](https://drive.google.com/file/d/13Tj6zH3HewmjLY0JXB9TJ0mtsZ7MqIBo/view?usp=sharing )
 ```
-$ dvc get https://github.com/iterative/dataset-registry \
-          tutorials/versioning/data.zip
 $ unzip -q data.zip
 $ rm -f data.zip
 ```
