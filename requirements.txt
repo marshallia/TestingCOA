@@ -3,3 +3,4 @@ tensorflow
 pyyaml
 tqdm
 scikit-learn
+dvc
