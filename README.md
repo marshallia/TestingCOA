@@ -121,7 +121,7 @@ $ dvc run -n evaluate \
 ```
 Those stage will produce a dvc.yaml file that run our experiment automatically.
 The other way to create it is by type is by your self. there is a [sample_dvc.yaml](sample_dvc.yaml) to assist you if you want to create one by your self
- * To run the  dvc.yaml you can run dvc repro. it will run the experiment design with all its parameter. and you can reproduce the result multiple times. 
+ * To run the  dvc.yaml you can run dvc repro command. it will run the experiment design with all its parameter. and you can reproduce the result multiple times. 
 If there is no change in the parameter, code, or dependencies, then the stage will bw skipped. and only run the stage that changes
 ```
 $ dvc repro
@@ -142,15 +142,17 @@ $ dvc exp run --set-param training.dropout=.3
 $ dvc exp run --S feature.batch_size=16 --S training.batch_size=16 --S evaluate.batch_size=16
 4 dvc exp show
 ```
+![list of experiments](asset/img_8.png)
 * Compare metrics result
 ```
 $ dvc metrics show
 $ dvc metrics diff
 ```
 * Remove experiment
-```angular2html
+```
 $dvc remove exp-id
 ```
+When you run the experiment with set parameter it will automatically update the params.yaml. 
 
 ### Visualization
 DVC provide visualization by ceating a html file from json file. However the json file should meet certain format so it can be execute
@@ -165,6 +167,9 @@ $ dvc plots show
 $ dvc metrics diff
 $ dvc plots diff
 ```
+![show metrics diff](asset/img_9.png)
+
+![plot metrics diff](asset/img_7.png)
 ## Tagging you result
 Since you have done a lot of experiment you can select your best experiment and save the result then tag it for release.
 ```
@@ -202,13 +207,15 @@ Please modify the state of the action from push to pull-request
 ![modified action Image](asset/img_3.png)
 
  * Create your Pull Request
+Pull Requests are a mechanism to notify other team member that they have completed a feature branch. By using pull request team member can discuss about the code, check commit history, and check the CI status.
+Please remember that pull request is done from a feature branch to master branch.
+Any advises for common problems or issues? Please contact author.
+To create pull request, go to tab pull request. select the branch you want to compare and create a pull request
+![the example of how to create pull request](asset/img_6.png)
+![the example of open pull request](asset/img_5.png)
 
-Any advises for common problems or issues? Please contact author
-
-```
-command to run if program contains helper info
-```
-
+## Slide and Homework
+For ppt and homework detail please check [this link](https://docs.google.com/presentation/d/1llfWtPO3l5qnfrxyUXXwCq9IUptMxuqiHGZk9nW9phY/edit?usp=sharing)
 ## Authors
 
 Contributors names and contact info
