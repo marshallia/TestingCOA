@@ -1,0 +1,4 @@
+[core]
+    remote = cicd
+['remote "cicd"']
+    url = gdrive://1GQYcG9VBsAxp4O34P04OPvKyx3MGPLjC

@@ -1,7 +1,7 @@
 import numpy as np
 import sys
 import os
-
+import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dropout, Flatten, Dense
@@ -22,7 +22,7 @@ cats_train_path = os.path.join(path, train_data_dir, 'cats')
 nb_train_samples = 2 * len([name for name in os.listdir(cats_train_path)
                             if os.path.isfile(
                                 os.path.join(cats_train_path, name))])
-nb_validation_samples = 600
+nb_validation_samples = 700
 epochs = 10
 batch_size = 10
 
@@ -73,7 +73,7 @@ def train_top_model():
     model.add(Dense(2, activation='softmax'))
 
     model.compile(optimizer='rmsprop',
-                  loss='categorical_crossentropy', metrics=['accuracy','categorical_accuracy',,tf.keras.metrics.AUC()])
+                  loss='categorical_crossentropy', metrics=['accuracy','categorical_accuracy',tf.keras.metrics.AUC()])
     
     print(model.summary())
     model.fit(train_data, np.eye(2)[train_labels],
