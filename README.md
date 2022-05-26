@@ -14,7 +14,7 @@ GitHub Management.
 * Before start training please fork this repository to your own GitHub account
 * Make sure that your system has python v2.9
 * Download initial data set. This dataset containing images of cats and dogs. 1000 for training, 600 for validation, and 200 for test
-download the dataset from [here](https://drive.google.com/file/d/13Tj6zH3HewmjLY0JXB9TJ0mtsZ7MqIBo/view?usp=sharing )
+download the dataset from [here](https://drive.google.com/file/d/1-CKckeaXxZBkoG0lZVreeIrwULYuL7P4/view?usp=sharing)
 ```
 $ unzip -q data.zip
 $ rm -f data.zip
@@ -62,7 +62,7 @@ $ git tag -a "v1.0" -m "model v1.0, 1000 images"
 ```
 The dvc add model.h5 will add model.h5 to gitignore file therefore will not be pushed to github.
 If you want to push the model you can skip the command. 
- * Download more images to increase dataset size. Now you have 2000 images of training.
+ * Download more images to increase dataset size. Now you have 2000 images of training. if you failed get it from dvc you can download it from [here](https://drive.google.com/file/d/18XdJ5cMeVS6PsxDURDCe52rRfLUFCI8K/view?usp=sharing_)
 ```
 $ dvc get https://github.com/iterative/dataset-registry \
           tutorials/versioning/new-labels.zip

@@ -23,7 +23,7 @@ cats_train_path = os.path.join(path, train_data_dir, 'cats')
 nb_train_samples = 2 * len([name for name in os.listdir(cats_train_path)
                             if os.path.isfile(
                                 os.path.join(cats_train_path, name))])
-nb_validation_samples = 700
+nb_validation_samples = 600
 epochs = 10
 batch_size = 10
 
