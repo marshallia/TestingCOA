@@ -23,7 +23,7 @@ $ rm -f data.zip
 ### Installing
 
 * Step by StepTo be able to run the script you need to install all required package listed in requirement.txt
-
+Please note that we will use tensorflow and >=python3.8
 ```
 $ pip install -r requirements.txt
 ```
@@ -41,9 +41,10 @@ Here we will learn how to use several data set to produce a different model and 
 $ dvc add data
 ```
 #### Create remote storage
-Create a folder in your remote storage. it can be a amazon S3 or gDrive. Then add it to your project
+Create a folder in your remote storage. it can be a amazon S3 or gDrive. Then add it to your project. Please replace your url from the folder you have created.
+![remote storage](asset/img_10.png)
 ```
-$ dvc remote add $ dvc remote add --default cicd gdrive://1dYU8Y-4jjlNC30mQoJq67GyE9xUsb9Fa
+$ dvc remote add -d cicd gdrive://url-url
 $ dvc push
 ```
 #### Data Versioning
@@ -51,12 +52,16 @@ $ dvc push
 ```
 $ python train.py
 ```
+This will create  model.h5 file and a metrics.csv file containing the model and the training history. If you want to check the run parameter you can run "dvc exp show". However, since we haven't learned  about experiment we will skip it for now.
+![exp show first model](asset/img_11.png)
  * Save the model and tag it as first version
 ```
 $ dvc add model.h5
-$ git commit -m "First model, trained with 1000 images"
-$ git tag -a "v1.0" -m "model v1.0, 1000 images”
+$ git commit -a -m "First model, trained with 1000 images"
+$ git tag -a "v1.0" -m "model v1.0, 1000 images"
 ```
+The dvc add model.h5 will add model.h5 to gitignore file therefore will not be pushed to github.
+If you want to push the model you can skip the command. 
  * Download more images to increase dataset size. Now you have 2000 images of training.
 ```
 $ dvc get https://github.com/iterative/dataset-registry \
@@ -68,7 +73,7 @@ $ rm -f new-labels.zip
 ```
 $ python train.py
 $ dvc add model.h5
-$ git commit -m "Second model, trained with 2000 images"
+$ git commit -a -m "Second model, trained with 2000 images"
 $ git tag -a "v2.0" -m "model v2.0, 2000 images”
 ```
 #### Switching between data version
@@ -97,13 +102,17 @@ $ dvc stage add -n featurize \
                 -o feature \
                 python src/featurization.py data feature
 ```
+After running the command above, it will generate dvc.yaml that have featurize stage
+![after command img](asset/img_12.png)
+![dvc.yaml img](asset/img_13.png)
+Try to run the feature extraction by using dvc repro
  * Create a training stage
 ```
 $ dvc stage add -n train \
                 -p train.batch_size,train.epochs,train.dropout,train.optimizer,train.model_name \
-                -d src/training.py -d data feature\
+                -d src/training.py -d data -d feature\
                 -o model.h5 \
-                -m metrics.csv
+                -m metrics.csv \
                 python src/training.py feature
 
 ```
