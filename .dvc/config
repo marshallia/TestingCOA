@@ -1,0 +1,9 @@
+[core]
+    remote = remote
+    autostage = true
+['remote "maysa_storage"']
+    url = gdrive:///1WBYYNb00956F7kQIl8MNv6NVUb7NPbu6
+['remote "maysa"']
+    url = gdrive:///1WBYYNb00956F7kQIl8MNv6NVUb7NPbu6
+['remote "remote"']
+    url = gdrive://1WBYYNb00956F7kQIl8MNv6NVUb7NPbu6
