@@ -1,0 +1,46 @@
+stages:
+  featurize:
+    cmd: python3 src/featurization.py data feature
+    deps:
+    - data
+    - src/featurization.py
+    params:
+    - feature.batch_size
+    - feature.img_height
+    - feature.img_width
+    outs:
+    - feature
+  train:
+    cmd: python3 src/training.py feature
+    deps:
+    - data
+    - feature
+    - src/training.py
+    params:
+    - train.batch_size
+    - train.dropout
+    - train.epochs
+    - train.model_name
+    - train.optimizer
+    outs:
+    - model1.h5
+    - training_history.json
+    metrics:
+    - metrics.csv
+  evaluate:
+    cmd: python3 src/evaluate.py model1.h5 feature plot
+    deps:
+    - feature
+    - model1.h5
+    - src/evaluate.py
+    params:
+    - evaluate.batch_size
+    - evaluate.model_name
+    metrics:
+    - test_result.json:
+        cache: false
+    plots:
+    - plot/prc.json:
+        cache: false
+    - plot/roc.json:
+        cache: false

@@ -105,7 +105,7 @@ $ dvc stage add -n featurize \
 After running the command above, it will generate dvc.yaml that have featurize stage
 ![after command img](asset/img_12.png)
 ![dvc.yaml img](asset/img_13.png)
-Try to run the feature extraction by using dvc repro
+Try to run the feature extraction by using dvc exp run
  * Create a training stage
 ```
 $ dvc stage add -n train \
@@ -118,7 +118,7 @@ $ dvc stage add -n train \
 ```
  * Create a evaluate stage
 ```
-$ dvc run -n evaluate \
+$ dvc stage add -n evaluate \
           -p evaluate.batch_size,evaluate.model_name\
           -d src/evaluate.py -d feature -d model.h5 \
           -M test_result.json \
@@ -130,8 +130,9 @@ Those stage will produce a dvc.yaml file that run our experiment automatically.
 The other way to create it is by type is by your self. there is a [sample_dvc.yaml](sample_dvc.yaml) to assist you if you want to create one by your self
  * To run the  dvc.yaml you can run dvc repro command. it will run the experiment design with all its parameter. and you can reproduce the result multiple times. 
 If there is no change in the parameter, code, or dependencies, then the stage will bw skipped. and only run the stage that changes
+![skipped stages](asset/img_14.png)
 ```
-$ dvc repro
+$ dvc exp run 
 ```
 
 #### Run experiment
@@ -168,6 +169,8 @@ In this tutorial we will create a visualization of PRC adn ROC curve.
  * Visualise the saved points
 ```
 $ dvc plots show
+$ dvc plots modify plot/prc.json -x recall -y precision
+$ dvc plots modify plot/roc.json -x fpr -y tpr
 ```
  * Plot comparison from two different experiments
 ```

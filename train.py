@@ -8,7 +8,7 @@ from tensorflow.keras.layers import Dropout, Flatten, Dense
 from tensorflow.keras import applications
 from tensorflow.keras.callbacks import CSVLogger
 from tqdm.keras import TqdmCallback
-import tensorflow as tf 
+import tensorflow as tf
 
 pathname = os.path.dirname(sys.argv[0])
 path = os.path.abspath(pathname)
@@ -22,7 +22,7 @@ validation_data_dir = os.path.join('data', 'validation')
 cats_train_path = os.path.join(path, train_data_dir, 'cats')
 nb_train_samples = 2 * len([name for name in os.listdir(cats_train_path)
                             if os.path.isfile(
-                                os.path.join(cats_train_path, name))])
+        os.path.join(cats_train_path, name))])
 nb_validation_samples = 600
 epochs = 10
 batch_size = 10
@@ -74,13 +74,16 @@ def train_top_model():
     model.add(Dense(2, activation='softmax'))
 
     model.compile(optimizer='rmsprop',
-                  loss='categorical_crossentropy', metrics=['accuracy','categorical_accuracy',tf.keras.metrics.AUC()])
-    
-    print(model.summary())
+                  loss='categorical_crossentropy',
+                  metrics=['accuracy',
+                           'categorical_accuracy',
+                           tf.keras.metrics.AUC()]
+                  )
+
     model.fit(train_data, np.eye(2)[train_labels],
               epochs=epochs,
               batch_size=batch_size,
-              validation_data=(validation_data,  np.eye(2)[validation_labels]),
+              validation_data=(validation_data, np.eye(2)[validation_labels]),
               verbose=0,
               callbacks=[TqdmCallback(), CSVLogger("metrics.csv")])
     model.save_weights(top_model_weights_path)
