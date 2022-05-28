@@ -9,22 +9,29 @@ from tensorflow.keras.callbacks import CSVLogger
 from tqdm.keras import TqdmCallback
 import tensorflow as tf
 import yaml
+import pandas as pd
 
 if len(sys.argv) != 2:
     sys.stderr.write("Arguments error. Usage:\n")
     sys.stderr.write("\tpython train.py feature\n")
     sys.exit(1)
 
-BASE_PATH = '/Users/marshallia/PycharmProjects/training'
+BASE_PATH = '/Users/Jacky/Desktop/gii_0526/TestingCOA'
 
 pathname = os.path.dirname(sys.argv[0])
 path = os.path.abspath(pathname)
 params = yaml.safe_load(open(os.path.join(BASE_PATH, "params.yaml")))["train"]
 
-train_feature = os.path.join(sys.argv[1], "bottleneck_features_train.npy")
-val_feature = os.path.join(sys.argv[1], "bottleneck_features_validation.npy")
-train_label_output = os.path.join(sys.argv[1], "bottleneck_label_features_train.npy")
-validation_label_output = os.path.join(sys.argv[1], "bottleneck_label_features_validation.npy")
+train_feature = os.path.join(BASE_PATH, sys.argv[1],
+                             "bottleneck_features_train.npy")
+val_feature = os.path.join(BASE_PATH, sys.argv[1],
+                           "bottleneck_features_val.npy")
+train_label_output = os.path.join(BASE_PATH, sys.argv[1],
+                                  "bottleneck_label_features_train.npy")
+val_label_path = 'bottleneck_label_features_validation.npy'
+validation_label_output = os.path.join(BASE_PATH,
+                                       sys.argv[1],
+                                       val_label_path)
 
 # dimensions of our images.
 batch_size = params["batch_size"]
@@ -62,12 +69,16 @@ def train_top_model():
     model.compile(optimizer=optimizer,
                   loss='binary_crossentropy', metrics=METRICS)
 
-    model.fit(train_data, train_labels,
-              epochs=epochs,
-              batch_size=batch_size,
-              validation_data=(validation_data, validation_labels),
-              verbose=0,
-              callbacks=[TqdmCallback(), CSVLogger("metrics.csv")])
+    history = model.fit(train_data, train_labels,
+                        epochs=epochs,
+                        batch_size=batch_size,
+                        validation_data=(validation_data, validation_labels),
+                        verbose=0,
+                        callbacks=[TqdmCallback(), CSVLogger("metrics.csv")])
+    hist_dict = pd.DataFrame(history.history)
+    hist_json_file = 'training_history.json'
+    with open(hist_json_file, mode='w') as f:
+        hist_dict.to_json(f)
     model.save(model_name)
 
 

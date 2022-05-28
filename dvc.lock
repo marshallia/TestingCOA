@@ -1,0 +1,22 @@
+schema: '2.0'
+stages:
+  featurize:
+    cmd: python src/featurization.py data feature
+    deps:
+    - path: data
+      md5: 6482949a8df4369294ea688c9c16383d.dir
+      size: 63944238
+      nfiles: 2804
+    - path: src/featurization.py
+      md5: 50e89d150250265f4b590dc3c0028e8f
+      size: 4554
+    params:
+      params.yaml:
+        feature.batch_size: 10
+        feature.img_height: 150
+        feature.img_width: 150
+    outs:
+    - path: feature
+      md5: b4e611dde10bb8e4b3e5f4294ba69739.dir
+      size: 91762368
+      nfiles: 6
