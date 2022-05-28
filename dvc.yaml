@@ -23,15 +23,15 @@ stages:
     - train.model_name
     - train.optimizer
     outs:
-    - model1.h5
+    - model2.h5
     - training_history.json
     metrics:
     - metrics.csv
   evaluate:
-    cmd: python src/evaluate.py model1.h5 feature plot
+    cmd: python src/evaluate.py model2.h5 feature plot
     deps:
     - feature
-    - model1.h5
+    - model2.h5
     - src/evaluate.py
     params:
     - evaluate.batch_size
