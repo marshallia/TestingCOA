@@ -10,12 +10,14 @@ import yaml
 
 if len(sys.argv) != 3 and len(sys.argv) != 5:
     sys.stderr.write("Arguments error. Usage:\n")
-    sys.stderr.write("\tpython featurization.py data-dir-path features-dir-path\n")
+    sys.stderr.write(
+        "\tpython featurization.py data-dir-path features-dir-path\n")
     sys.exit(1)
 
-BASE_PATH = '/Users/marshallia/PycharmProjects/training'
+BASE_PATH = r"C:\Users\COA\Documents\GitHub\TestingCOA"
 
-params = yaml.safe_load(open(os.path.join(BASE_PATH, "params.yaml")))["feature"]
+params = yaml.safe_load(
+    open(os.path.join(BASE_PATH, "params.yaml")))["feature"]
 img_width = params["img_width"]
 img_height = params["img_height"]
 batch_size = params["batch_size"]
@@ -24,13 +26,19 @@ train_data_dir = os.path.join(sys.argv[1], "train")
 validation_data_dir = os.path.join(sys.argv[1], "validation")
 test_data_dir = os.path.join(sys.argv[1], "test")
 
-train_output = os.path.join(sys.argv[2], "bottleneck_features_train.npy")
-validation_output = os.path.join(sys.argv[2], "bottleneck_features_validation.npy")
-test_output = os.path.join(sys.argv[2], "bottleneck_features_test.npy")
+train_output = os.path.join(
+    sys.argv[2], "bottleneck_features_train.npy")
+validation_output = os.path.join(
+    sys.argv[2], "bottleneck_features_validation.npy")
+test_output = os.path.join(
+    sys.argv[2], "bottleneck_features_test.npy")
 
-train_label_output = os.path.join(sys.argv[2], "bottleneck_label_features_train.npy")
-validation_label_output = os.path.join(sys.argv[2], "bottleneck_label_features_validation.npy")
-test_label_output = os.path.join(sys.argv[2], "bottleneck_label_features_test.npy")
+train_label_output = os.path.join(
+    sys.argv[2], "bottleneck_label_features_train.npy")
+validation_label_output = os.path.join(
+    sys.argv[2], "bottleneck_label_features_validation.npy")
+test_label_output = os.path.join(
+    sys.argv[2], "bottleneck_label_features_test.npy")
 
 
 def generator(data_path):
@@ -82,7 +90,8 @@ def save_bottlebeck_features():
 
     cats_val_path = os.path.join(validation_data_dir, 'cats')
     val_generator = generator(validation_data_dir)
-    validation_labels, nb_validation_samples = generate_label(cats_val_path, True)
+    validation_labels, nb_validation_samples = generate_label(
+        cats_val_path, True)
     save_features(validation_label_output, validation_labels)
     bottleneck_features_validation = model.predict(
         val_generator, nb_validation_samples // batch_size)
@@ -92,7 +101,8 @@ def save_bottlebeck_features():
     test_label, nb_test_samples = generate_label(cats_test_path)
     save_features(test_label_output, test_label)
     test_generator = generator(test_data_dir)
-    bottleneck_features_test = model.predict(test_generator, nb_test_samples // batch_size)
+    bottleneck_features_test = model.predict(
+        test_generator, nb_test_samples // batch_size)
     save_features(test_output, bottleneck_features_test)
 
 

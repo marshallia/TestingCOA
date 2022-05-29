@@ -13,13 +13,15 @@ if len(sys.argv) != 4:
     sys.stderr.write("Arguments error. Usage:\n")
     sys.stderr.write("\tpython evaluate.py model features model output_plot\n")
     sys.exit(1)
-BASE_PATH = '/Users/marshallia/PycharmProjects/training'
+BASE_PATH = r'C:\Users\COA\Documents\GitHub\TestingCOA'
 
-params = yaml.safe_load(open(os.path.join(BASE_PATH, "params.yaml")))["evaluate"]
+params = yaml.safe_load(
+    open(os.path.join(BASE_PATH, "params.yaml")))["evaluate"]
 batch_size = params["batch_size"]
 
 test_feature = os.path.join(sys.argv[2], "bottleneck_features_test.npy")
-test_label_feature = os.path.join(sys.argv[2], "bottleneck_label_features_test.npy")
+test_label_feature = os.path.join(
+    sys.argv[2], "bottleneck_label_features_test.npy")
 model_name = os.path.join(BASE_PATH, sys.argv[1])
 plot_output = os.path.join(BASE_PATH, sys.argv[3])
 prc_path = os.path.join(plot_output, 'prc.json')
@@ -33,20 +35,26 @@ def evaluate():
     test_data = np.load(open(test_feature, 'rb'))
     test_label = np.load(open(test_label_feature, 'rb'))
 
-    evaluate = model.evaluate(test_data, test_label, batch_size=batch_size, return_dict=True,
-                              callbacks=[TqdmCallback()])
+    evaluate = model.evaluate(
+        test_data, test_label,
+        batch_size=batch_size,
+        return_dict=True,
+        callbacks=[TqdmCallback()])
     out_file = "test_result.json"
     with open(out_file, "w") as file:
         json.dump(evaluate, file,
                   indent=4, )
     prediction = model.predict(test_data, callbacks=[TqdmCallback()])
 
-    precision, recall, thresholds = precision_recall_curve(test_label, prediction)
+    precision, recall, thresholds = precision_recall_curve(
+        test_label, prediction)
     save_ploting(prc_path, 'prc', precision, recall, thresholds,
                  ['precision', 'recall', 'threshold'])
 
     fpr, tpr, thresholds = roc_curve(test_label, prediction)
-    save_ploting(roc_path, 'roc', fpr, tpr, thresholds, ['fpr', 'tpr', 'threshold'])
+    save_ploting(roc_path, 'roc',
+                 fpr, tpr,
+                 thresholds, ['fpr', 'tpr', 'threshold'])
 
 
 def save_ploting(path, name, list_val1, list_val2, thresholds, keys):
@@ -56,8 +64,12 @@ def save_ploting(path, name, list_val1, list_val2, thresholds, keys):
         json.dump(
             {
                 name: [
-                    {keys[0]: str(val1), keys[1]: str(val2), keys[2]: str(val3)}
-                    for val1, val2, val3 in zip(list_val1, list_val2, thresholds)
+                    {keys[0]: str(val1),
+                     keys[1]: str(val2),
+                     keys[2]: str(val3)}
+                    for val1, val2, val3 in zip(list_val1,
+                                                list_val2,
+                                                thresholds)
                 ]
             },
             file,

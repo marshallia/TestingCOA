@@ -15,7 +15,7 @@ if len(sys.argv) != 2:
     sys.stderr.write("\tpython train.py feature\n")
     sys.exit(1)
 
-BASE_PATH = '/Users/marshallia/PycharmProjects/training'
+BASE_PATH = r'C:\Users\COA\Documents\GitHub\TestingCOA'
 
 pathname = os.path.dirname(sys.argv[0])
 path = os.path.abspath(pathname)
