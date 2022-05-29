@@ -74,7 +74,8 @@ def train_top_model():
 
     model.compile(optimizer='rmsprop',
                   loss='categorical_crossentropy',
-                  metrics=['accuracy', 'categorical_accuracy', tf.keras.metrics.AUC()])
+                  metrics=['accuracy', 'categorical_accuracy',
+                           tf.keras.metrics.AUC()])
 
     print(model.summary())
     model.fit(train_data, np.eye(2)[train_labels],
