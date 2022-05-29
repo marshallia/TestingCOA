@@ -23,8 +23,10 @@ params = yaml.safe_load(open(os.path.join(BASE_PATH, "params.yaml")))["train"]
 
 train_feature = os.path.join(sys.argv[1], "bottleneck_features_train.npy")
 val_feature = os.path.join(sys.argv[1], "bottleneck_features_validation.npy")
-train_label_output = os.path.join(sys.argv[1], "bottleneck_label_features_train.npy")
-validation_label_output = os.path.join(sys.argv[1], "bottleneck_label_features_validation.npy")
+train_label_output = os.path.join(
+    sys.argv[1], "bottleneck_label_features_train.npy")
+validation_label_output = os.path.join(
+    sys.argv[1], "bottleneck_label_features_validation.npy")
 
 # dimensions of our images.
 batch_size = params["batch_size"]
